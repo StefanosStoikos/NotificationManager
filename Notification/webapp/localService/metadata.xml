@@ -1,0 +1,20 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZGW_DVP_PRODUCTS_SRV" xml:lang="en" sap:schema-version="1">
+			<EntityType Name="CATEGORY" sap:content-version="1">
+				<Key><PropertyRef Name="CategoryId"/></Key><Property Name="CategoryId" Type="Edm.String" Nullable="false" MaxLength="4"
+					sap:label="Not More Closely Defined Area, Possibly Used for Patchlevels" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="Text" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="PRODUCT" sap:content-version="1">
+				<Key><PropertyRef Name="ProductId"/></Key><Property Name="ProductId" Type="Edm.Int32" Nullable="false" sap:label="Number" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="Text" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityContainer Name="ZGW_DVP_PRODUCTS_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="CATEGORYSet" EntityType="ZGW_DVP_PRODUCTS_SRV.CATEGORY" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="PRODUCTSET" EntityType="ZGW_DVP_PRODUCTS_SRV.PRODUCT" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:addressable="false" sap:content-version="1"/></EntityContainer><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self"
+				href="http://127.0.0.1:8016/sap/opu/odata/sap/ZGW_DVP_PRODUCTS_SRV/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version"
+				href="http://127.0.0.1:8016/sap/opu/odata/sap/ZGW_DVP_PRODUCTS_SRV/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
