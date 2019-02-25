@@ -1,21 +1,70 @@
-	/*global QUnit*/
+sap.ui.define([
+	"sap/ui/test/opaQunit"
+], function (opaTest) {
+	"use strict";
 
-	sap.ui.define([
-		"sap/ui/test/opaQunit",
-		"./pages/Home"
-	], function (opaTest) {
-		"use strict";
+	QUnit.module("Desktop navigation");
 
-		QUnit.module("Navigation Journey");
+	opaTest("Should start the app with empty hash: the hash should reflect the selection of the first item in the list", function (Given,
+		When, Then) {
+		// Arrangements
+		Given.iStartTheApp();
 
-		opaTest("Should see the initial page of the app", function (Given, When, Then) {
-			// Arrangements
-			Given.iStartMyApp();
+		//Actions
+		When.onTheMasterPage.iRememberTheSelectedItem();
 
-			// Assertions
-			Then.onTheAppPage.iShouldSeeTheApp();
-
-			//Cleanup
-			Then.iTeardownMyApp();
-		});
+		// Assertions
+		Then.onTheMasterPage.theFirstItemShouldBeSelected();
+		Then.onTheDetailPage.iShouldSeeTheRememberedObject().and.iShouldSeeNoBusyIndicator();
+		Then.onTheBrowserPage.iShouldSeeTheHashForTheRememberedObject();
 	});
+
+	opaTest("Should react on hashchange", function (Given, When, Then) {
+		// Actions
+		When.onTheMasterPage.iRememberTheIdOfListItemAtPosition(2);
+		When.onTheBrowserPage.iChangeTheHashToTheRememberedItem();
+
+		// Assertions
+		Then.onTheDetailPage.iShouldSeeTheRememberedObject().and.iShouldSeeNoBusyIndicator();
+		Then.onTheMasterPage.theRememberedListItemShouldBeSelected();
+	});
+
+	opaTest("Should navigate on press", function (Given, When, Then) {
+		// Actions
+		When.onTheMasterPage.iRememberTheIdOfListItemAtPosition(1).
+		and.iPressOnTheObjectAtPosition(1);
+
+		// Assertions
+		Then.onTheDetailPage.iShouldSeeTheRememberedObject();
+	});
+
+	opaTest("Navigate to an object not on the client: no item should be selected and the object page should be displayed", function (Given,
+		When, Then) {
+		//Actions
+		When.onTheMasterPage.iRememberAnIdOfAnObjectThatsNotInTheList();
+		When.onTheBrowserPage.iChangeTheHashToTheRememberedItem();
+
+		// Assertions
+		Then.onTheDetailPage.iShouldSeeTheRememberedObject().
+		and.iTeardownMyAppFrame();
+	});
+
+	opaTest("Start the App and simulate metadata error: MessageBox should be shown", function (Given, When, Then) {
+		//Arrangement
+		Given.iStartMyAppOnADesktopToTestErrorHandler("metadataError=true");
+
+		// Assertions
+		Then.onTheAppPage.iShouldSeeTheMessageBox("metadataErrorMessageBox").
+		and.iTeardownMyAppFrame();
+	});
+
+	opaTest("Start the App and simulate bad request error: MessageBox should be shown", function (Given, When, Then) {
+		//Arrangement
+		Given.iStartMyAppOnADesktopToTestErrorHandler("errorType=serverError");
+
+		// Assertions
+		Then.onTheAppPage.iShouldSeeTheMessageBox("serviceErrorMessageBox").
+		and.iTeardownMyAppFrame();
+	});
+
+});

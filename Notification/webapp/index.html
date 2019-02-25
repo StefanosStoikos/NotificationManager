@@ -5,14 +5,15 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta charset="UTF-8">
 
-		<title>NotificationManager</title>
+		<title>Manual Notification</title>
 
 		<script id="sap-ui-bootstrap"
-			src="../../resources/sap-ui-core.js"
+			 src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			data-sap-ui-async="true"
 			data-sap-ui-libs="sap.m"
 			data-sap-ui-theme="sap_belize"
 			data-sap-ui-compatVersion="edge"
-			data-sap-ui-resourceroots='{"AvelonNamespace.AvelonNotification": "./"}'>
+			data-sap-ui-resourceroots='{"Avelon.manualnotification": "./"}'>
 		</script>
 
 		<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -22,7 +23,7 @@
 				new sap.m.Shell({
 					app: new sap.ui.core.ComponentContainer({
 						height : "100%",
-						name : "AvelonNamespace.AvelonNotification"
+						name : "Avelon.manualnotification"
 					})
 				}).placeAt("content");
 			});

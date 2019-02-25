@@ -1,32 +1,33 @@
 {
 	"_version": "1.8.0",
 	"sap.app": {
-		"id": "AvelonNamespace.AvelonNotification",
+		"id": "Avelon.manualnotification",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
-		"title": "{{appTitle}}",
-		"description": "{{appDescription}}",
-		"sourceTemplate": {
-			"id": "servicecatalog.connectivityComponentForManifest",
-			"version": "0.0.0"
-		},
 		"dataSources": {
-			"MANUALNOTIFICATION_SRV": {
-				"uri": "/sap/opu/odata/Avelon/MANUALNOTIFICATION_SRV/",
+			"mainService": {
+				"uri": "/AV7/sap/opu/odata/avelon/MANUALNOTIFICATION_SRV/",
 				"type": "OData",
 				"settings": {
-					"localUri": "localService/MANUALNOTIFICATION_SRV/metadata.xml"
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
 				}
 			}
+		},
+		"sourceTemplate": {
+			"id": "html5projecttemplates.2masterdetailcrud",
+			"version": "1.40.12"
 		}
 	},
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
-			"icon": "",
+			"icon": "sap-icon://detail-view",
 			"favIcon": "",
 			"phone": "",
 			"phone@2": "",
@@ -37,21 +38,29 @@
 			"desktop": true,
 			"tablet": true,
 			"phone": true
-		}
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "AvelonNamespace.AvelonNotification.view.Home",
+			"viewName": "Avelon.manualnotification.view.App",
 			"type": "XML",
-			"async": true,
-			"id": "Home"
+			"id": "app"
 		},
 		"dependencies": {
-			"minUI5Version": "1.60.1",
+			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.layout": {},
 				"sap.ui.core": {},
-				"sap.m": {}
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.f": {},
+				"sap.ushell": {},
+				"sap.collaboration": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {}
 			}
 		},
 		"contentDensities": {
@@ -62,51 +71,86 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "AvelonNamespace.AvelonNotification.i18n.i18n"
+					"bundleName": "Avelon.manualnotification.i18n.i18n"
 				}
 			},
 			"NotificationForm": {
 				"type": "sap.ui.model.json.JSONModel"
 			},
-			"Default": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
-				"dataSource": "MANUALNOTIFICATION_SRV",
-				"preload": true
-			}
-		},
-		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
+			"EditNotificationForm": {
+				"type": "sap.ui.model.json.JSONModel"
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay"
 				}
-			]
+			}
+			
 		},
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"async": true,
-				"viewPath": "AvelonNamespace.AvelonNotification.view",
-				"controlAggregation": "pages",
-				"controlId": "app",
-				"clearControlAggregation": false
+				"viewPath": "Avelon.manualnotification.view",
+				"controlId": "idAppControl",
+				"controlAggregation": "detailPages",
+				"bypassed": {
+					"target": [
+						"master",
+						"notFound"
+					]
+				},
+				"async": true
 			},
 			"routes": [
 				{
-					"name": "RouteHome",
-					"pattern": "RouteHome",
+					"pattern": "",
+					"name": "master",
 					"target": [
-						"TargetHome"
+						"object",
+						"master"
+					]
+				},
+				{
+					"pattern": "NotificationInfoSet/{ManualNotifId}",
+					"name": "object",
+					"target": [
+						"master",
+						"object"
 					]
 				}
 			],
 			"targets": {
-				"TargetHome": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewId": "Home",
-					"viewName": "Home"
+				"master": {
+					"viewName": "Master",
+					"viewLevel": 1,
+					"viewId": "master",
+					"controlAggregation": "masterPages"
+				},
+				"object": {
+					"viewName": "Detail",
+					"viewId": "detail",
+					"viewLevel": 2
+				},
+				"create": {
+					"viewName": "CreateEntity",
+					"viewLevel": 2
+				},
+				"detailObjectNotFound": {
+					"viewName": "DetailObjectNotFound",
+					"viewId": "detailObjectNotFound"
+				},
+				"detailNoObjectsAvailable": {
+					"viewName": "DetailNoObjectsAvailable",
+					"viewId": "detailNoObjectsAvailable"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
 				}
 			}
 		}

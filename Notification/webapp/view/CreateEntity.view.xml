@@ -1,0 +1,56 @@
+<mvc:View controllerName="Avelon.manualnotification.controller.CreateEntity" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
+	xmlns:smart="sap.ui.comp.smartfield" xmlns="sap.m">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" title="{viewModel>/viewTitle}" busy="{viewModel>/busy}">
+		<semantic:content>
+			<f:SimpleForm class="editableForm form" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+				visible="{= ${viewModel>/mode} !== 'edit'? true : false}"
+				title="{= ${viewModel>/mode} === 'edit'? 'Edit Notification': 'Create Manual Notification'}">
+				<f:content>
+					<Label text="Manual notification ID"></Label>
+					<Input value="{path : 'NotificationForm>/ManualNotifId'}" required="true" maxLength="32"></Input>
+					<Label text="Instance ID"></Label>
+					<Input value="{path : 'NotificationForm>/Instid'}" liveChange="handleUserInput" required="true" maxLength="70"></Input>
+					<Label text="Type ID"></Label>
+					<Input value="{path : 'NotificationForm>/Typeid'}" required="true" maxLength="32"></Input>
+					<Label text="Category ID"></Label>
+					<Select selectedKey="{path : 'NotificationForm>/Catid'}" items="{path : '/CatidSet'}">
+						<core:Item key="{Catid}" text="{Catid} - {Description}"/>
+					</Select>
+					<Label text="Notification date"></Label>
+					<DatePicker valueFormat="yyyy-MM-dd" required="true" value="{path : 'NotificationForm>/NotifDate'}"></DatePicker>
+					<Label text="Description"></Label>
+					<Input value="{path : 'NotificationForm>/Description'}" required="true" maxLength="255"></Input>
+				</f:content>
+			</f:SimpleForm>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="EntitySimpleForm"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+				visible="{= ${viewModel>/mode} === 'edit'? true : false}"
+				title="{= ${viewModel>/mode} === 'edit'? 'Edit Notification': 'Create Manual Notification'}">
+				<f:content>
+					<Label text="Manual notification ID"></Label>
+					<Input id="notifId" value="{ManualNotifId}" editable="false" required="true" maxLength="32"></Input>
+					<Label text="Instance ID"></Label>
+					<Input value="{Instid}" liveChange="handleUserInput" required="true" maxLength="70"></Input>
+					<Label text="Type ID"></Label>
+					<Input value="{Typeid}" required="true" maxLength="32"></Input>
+					<Label text="Category ID"></Label>
+					<Select selectedKey="{Catid}" items="{path : '/CatidSet'}">
+						<core:Item key="{Catid}" text="{Catid} - {Description}"/>
+					</Select>
+					<Label text="Notification date"></Label>
+					<DatePicker valueFormat="yyyy-MM-dd" required="true" value="{NotifDate}"></DatePicker>
+					<Label text="Description"></Label>
+					<Input value="{Description}" required="true" maxLength="255"></Input>
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		<semantic:saveAction>
+			<semantic:SaveAction id="save" press="onSave"/>
+		</semantic:saveAction>
+		<semantic:cancelAction>
+			<semantic:CancelAction id="cancel" press="onCancel"></semantic:CancelAction>
+		</semantic:cancelAction>
+	</semantic:DetailPage>
+</mvc:View>

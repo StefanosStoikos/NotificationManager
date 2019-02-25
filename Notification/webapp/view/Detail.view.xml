@@ -1,0 +1,31 @@
+<mvc:View controllerName="Avelon.manualnotification.controller.Detail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.ui.layout.form" xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" title="Notification Detail" busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<f:SimpleForm class="form" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="SimpleForm" labelSpanL="3"
+				labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024" title="{ManualNotifId}">
+				<f:content>
+					<Label text="Manual notification ID"></Label>
+					<Input value="{ManualNotifId}" editable="false" required="true" maxLength="32"></Input>
+					<Label text="Instance ID"></Label>
+					<Input value="{Instid}" editable="false" liveChange="handleUserInput" required="true" maxLength="70"></Input>
+					<Label text="Type ID"></Label>
+					<Input value="{Typeid}" editable="false" required="true" maxLength="32"></Input>
+					<Label text="Category ID"></Label>
+					<Input value="{Catid}" editable="false" required="true" maxLength="32"></Input>
+					<Label text="Notification date"></Label>
+					<DatePicker valueFormat="yyyy-MM-dd" editable="false" required="true" value="{NotifDate}"></DatePicker>
+					<Label text="Description"></Label>
+					<Input value="{Description}" editable="false" required="true" maxLength="255"></Input>
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		<semantic:editAction>
+			<semantic:EditAction id="edit" press="onEdit"/>
+		</semantic:editAction>
+		<semantic:customFooterContent>
+			<Button enabled="true" id="deleteButton" press="onDelete" text="Delete"/>
+		</semantic:customFooterContent>
+	</semantic:DetailPage>
+</mvc:View>
